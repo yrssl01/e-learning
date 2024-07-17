@@ -32,8 +32,10 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'daphne',
     'courses.apps.CoursesConfig',
     'students.apps.StudentsConfig',
+    'chat.apps.ChatConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -41,7 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'embed_video',
-    'debug_toolbar',
+    # 'debug_toolbar',
     'redisboard',
     'rest_framework'
 ]
@@ -53,7 +55,7 @@ REST_FRAMEWORK = {
 }
 
 MIDDLEWARE = [
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
+    # 'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     # 'django.middleware.cache.UpdateCacheMiddleware',
@@ -160,3 +162,14 @@ LOGIN_REDIRECT_URL = reverse_lazy('student_course_list')
 INTERNAL_IPS = [
     '127.0.0.1',
 ]
+
+ASGI_APPLICATION = 'educa.asgi.application'
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            'hosts': [('127.0.0.1', 6379)]
+        }
+    }
+}
